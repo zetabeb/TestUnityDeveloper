@@ -30,5 +30,7 @@ namespace KartGame.AI
                 Gizmos.DrawWireCube(xform.position, Vector3.one);
             }
         }
+
     }
+    
 }

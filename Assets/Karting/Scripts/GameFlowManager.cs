@@ -25,6 +25,11 @@ public class GameFlowManager : MonoBehaviour
     public bool isTest = false;
     public GameObject Tooning;
 
+    [Header("Respawn")]
+    [Tooltip("UI Canvas that is seen when obtaining points")]
+    public List<GameObject> RespawnColliders;
+    public Transform RespawnLocation;
+
     [Header("Win")]
     [Tooltip("This string has to be the name of the scene you want to load when winning")]
     public string winSceneName = "WinScene";
@@ -66,6 +71,11 @@ public class GameFlowManager : MonoBehaviour
     {
         gameMode = PlayerPrefs.GetInt("gameMode");
         
+        foreach(var collider in RespawnColliders)
+        {
+            collider.gameObject.AddComponent<Respawn>();
+            collider.GetComponent<Respawn>().gameManager = this;
+        }
 
         if (autoFindKarts)
         {
@@ -214,6 +224,17 @@ public class GameFlowManager : MonoBehaviour
 
             if (m_TimeManager.IsFinite && m_TimeManager.IsOver)
                 EndGame(false);
+        }
+    }
+    private void LateUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (RespawnLocation)
+            {
+                playerKart.transform.position = RespawnLocation.position;
+                playerKart.transform.rotation = RespawnLocation.rotation;
+            }
         }
     }
 

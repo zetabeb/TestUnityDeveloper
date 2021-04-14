@@ -641,10 +641,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: 2929a688-94f7-4846-b92c-2f9ee75edcb2
+  cloudProjectId: 01b5ac35-8dfc-41b4-8e31-99446b8a3b24
   framebufferDepthMemorylessMode: 0
   projectName: PruebaGetaGameStudios
-  organizationId: jhonny-guerra
+  organizationId: c2ed853-be4e-4831-bf9a-433579208e40
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 1
   disableOldInputManagerSupport: 0
