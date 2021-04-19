@@ -26,9 +26,18 @@ public class GameFlowManager : MonoBehaviour
     public GameObject Tooning;
 
     [Header("Respawn")]
-    [Tooltip("UI Canvas that is seen when obtaining points")]
+    [Tooltip("Here the respawn areas are configured")]
     public List<GameObject> RespawnColliders;
     public Transform RespawnLocation;
+
+    [Header("Turbo")]
+    [Tooltip("Variables for turbo power")]
+    public GameObject turboBar;
+    public GameObject turboPanel;
+    public float turboTime = 1;
+    public GameObject turboAnimation;
+    [HideInInspector]public float initialSpeed;
+    public List<GameObject> turboBars;
 
     [Header("Win")]
     [Tooltip("This string has to be the name of the scene you want to load when winning")]
@@ -67,6 +76,11 @@ public class GameFlowManager : MonoBehaviour
     string m_SceneToLoad;
     float elapsedTimeBeforeEndScene = 0;
 
+    public static GameFlowManager instance;
+    private void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
         gameMode = PlayerPrefs.GetInt("gameMode");
@@ -184,6 +198,24 @@ public class GameFlowManager : MonoBehaviour
     {
         StartCoroutine(UICheckPoint());
     }
+    public void AddTurbo()
+    {
+        turboBars.Add(turboBar);
+        Instantiate(turboBar, turboPanel.transform);
+    }
+    IEnumerator TurboOn()
+    {
+        if (turboBars.Count > 0)
+        {
+            Destroy(GameObject.FindGameObjectWithTag("TurboBar"));
+            turboBars.RemoveAt(turboBars.Count - 1);
+        }
+        playerKart.SetTopSpeed(20f);
+        turboAnimation.SetActive(true);
+        yield return new WaitForSeconds(turboTime);
+        turboAnimation.SetActive(false);
+        playerKart.SetTopSpeed(initialSpeed);
+    }
 
     IEnumerator UICheckPoint()
     {
@@ -195,6 +227,7 @@ public class GameFlowManager : MonoBehaviour
 
     void Update()
     {
+        
 
         if (gameState != GameState.Play)
         {
@@ -235,6 +268,10 @@ public class GameFlowManager : MonoBehaviour
                 playerKart.transform.position = RespawnLocation.position;
                 playerKart.transform.rotation = RespawnLocation.rotation;
             }
+        }
+        if (Input.GetKeyDown(KeyCode.T) && turboBars.Count>0)
+        {
+            StartCoroutine(TurboOn());
         }
     }
 

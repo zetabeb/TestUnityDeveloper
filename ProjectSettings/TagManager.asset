@@ -8,6 +8,8 @@ TagManager:
   - Checkpoint
   - Oponent
   - SkidArea
+  - TurboPanel
+  - TurboBar
   layers:
   - Default
   - TransparentFX

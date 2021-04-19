@@ -19,6 +19,7 @@ public class Power : MonoBehaviour
         SpeedInicial = arcadeKart.GetTopSpeed();
         accelerationInicial = arcadeKart.GetAcceleration();
         SteerInicial = arcadeKart.GetSteer();
+        GameFlowManager.instance.initialSpeed = SpeedInicial;
     }
     IEnumerator NoticeOn()
     {
@@ -29,11 +30,12 @@ public class Power : MonoBehaviour
     
 
     IEnumerator TurboOn()
-    {        
-        arcadeKart.SetAcceleration(16f);
+    {
+        //arcadeKart.SetAcceleration(16f);
+        GameFlowManager.instance.AddTurbo();
         StartCoroutine(NoticeOn());
         yield return new WaitForSeconds(2f);
-        arcadeKart.SetAcceleration(accelerationInicial);
+        //arcadeKart.SetAcceleration(accelerationInicial);
     }
     IEnumerator LostControlOn()
     {
